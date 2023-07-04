@@ -12,11 +12,18 @@ Sample_Timepoint <- c('01 week', '02 week', '05 week', '10 week', '01 week', '02
 Manifest <- data.frame(cbind(Patient_ID, Sample_ID, Sample_Timepoint))
 Manifest
 
+# load tidyverse
+library(tidyverse) 
+
 # dplyr approach 
-Manifest %>% arrange(Patient_ID, Sample_Timepoint) %>% group_by(Patient_ID) %>% 
+Sample_pair_list <- Manifest %>% arrange(Patient_ID, Sample_Timepoint) %>% group_by(Patient_ID) %>% 
   mutate(Comp_Sample_ID = first(Sample_ID), Comp_Sample_Timepoint = first(Sample_Timepoint)) %>% ungroup() %>%
   filter(Sample_ID != Comp_Sample_ID) %>% select(Sample_ID, Comp_Sample_ID)
+Sample_pair_list
 
+# write out the list as a tsv file
+write.table(Sample_pair_list, file = '/path/to/your/directory/cf-rna-sample-pairs-info.tsv', 
+            sep="\t", row.names = FALSE, quote = FALSE)
 
 ## More complex pairs-based approach if that is helpful
 
