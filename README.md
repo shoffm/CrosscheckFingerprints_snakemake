@@ -7,14 +7,14 @@ Pipeline for scaling crosscheck fingerprints for datasets with multiple samples 
 
 ## 1. ExtractFingerprints (in progress) 
 This part of the pipeline is run as a snakemake file. There are two steps 
-1. AddOrReplaceReadGroups. You'll need a directory of .bam input files
-2. ExtractFingerprints. You'll need two files
-- Reference sequence used to assemble your genomes
-- [Haplotype map](https://github.com/naumanjaved/fingerprint_maps). Can be downloaded from github. **Note:** The header to this file must match the header of your bam files (copy the header of your file and replace the header to the haplotype map file if need be). 
+1. `AddOrReplaceReadGroups` You'll need a directory of .bam input files
+2. `ExtractFingerprints` You'll need two files
+- Reference sequence used to assemble your genomes (i.e. `Homo_sapiens.GRCh38.dna.primary_assembly.fa`) 
+- [Haplotype map](https://gatk.broadinstitute.org/hc/en-us/articles/360035531672-Haplotype-map-format). Can be downloaded from [github](https://github.com/naumanjaved/fingerprint_maps). **Note:** The header to this file must match the header of your bam files (copy the header of your file and replace the header to the haplotype map file if need be). 
 
 Why Snakemake? 
 - Parallelization of independent jobs (i.e. adding read groups and extracting fingerprints) 
-- We don't have all of our rna samples sequenced yet. Snakemake is aware of which jobs have been run and will only run jobs that haven't been run before. In this case, we will be able to add .bam files as sample come in, and snakemake will only add read groups and extract fingerprints for the new files without modifying our code. Same will be true for comparisons
+- Snakemake is aware of which jobs have been run (read: if job output exists in the correct location) and will only run jobs that haven't been run before (read: don't have existing output in the correct location). For this project, we don't have all of our rna samples sequenced yet. In this case, we will be able to add bam files as samples are sequenced and rerun the snakemake pipeline. Snakemake will only add read groups and extract fingerprints for the new files without modifying our code. Same will be true for comparisons later... 
 
 See here re: [getting started with snakemake](https://github.com/Snitkin-Lab-Umich/Snakemake_setup)
 
