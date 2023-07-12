@@ -23,10 +23,10 @@ Why Snakemake?
 See here re: [getting started with snakemake](https://github.com/Snitkin-Lab-Umich/Snakemake_setup)
 
 ### To run this pipeline you will need to: 
-1. Make and activate the conda environment. Help getting started with conda [here](https://github.com/Snitkin-Lab-Umich/Snakemake_setup#conda)
+1. Make and activate the conda environment from the [gatk4_sn.yml](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/gatk4_sn.yml). Help getting started with conda [here](https://github.com/Snitkin-Lab-Umich/Snakemake_setup#conda).
 ```
-conda env create -f gatk4_sn # TO DO: add this file to github
-conda activate gatk4_sn
+conda env create -f gatk4_sn # do this only once, the first time
+conda activate gatk4_sn # do this every time
 ```
 2. Edit the Snakefile to point to the directory holding your bam files, reference sequence adnd haplotype map **TO DO**: add the snakefile and link here
 3. Run the script to submit snakemake as a job
