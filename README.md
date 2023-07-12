@@ -5,11 +5,7 @@ Pipeline for scaling crosscheck fingerprints for datasets with multiple samples 
 
 [Crosscheck fingerprints](https://gatk.broadinstitute.org/hc/en-us/articles/360037594711-CrosscheckFingerprints-Picard-) indicates whether two RNA-seq samples come from the same individual.
 
-
-## 1. Generate a list of sample-sample pairs for CrosscheckFingerprints input 
-Using this [example script](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/generate_sample_pairs.R). In our study we have 0-5 samples (from distinct time points) per individual. In order to make this analysis computationally efficient, we begin by comparing each sample from an individual only to the first time point from that individual. Not all individuals have the same first time point.
-
-## 2. ExtractFingerprints (in progress) 
+## 1. ExtractFingerprints (in progress) 
 This part of the pipeline is run as a snakemake file. There are two steps 
 1. AddOrReplaceReadGroups. You'll need a directory of .bam input files
 2. ExtractFingerprints. You'll need two files
@@ -32,3 +28,5 @@ conda activate gatk4_sn # do this every time
 3. Run the script to submit snakemake as a job
 
 ## 3. CrosscheckFingerprints (in progress)
+### 3.1. Generate a list of sample-sample pairs for CrosscheckFingerprints input 
+Using this [example script](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/generate_sample_pairs.R). In our study we have 0-5 samples (from distinct time points) per individual. In order to make this analysis computationally efficient, we begin by comparing each sample from an individual only to the first time point from that individual. Not all individuals have the same first time point.
