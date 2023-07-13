@@ -20,9 +20,10 @@ conda env create -f gatk4_sn # do this only once, the first time
 conda activate gatk4_sn # do this every time
 ```
 ### 1.2. Edit Snakefile
-In the Snakefile there are two steps 
+In the Snakefile there are three steps 
 1. `AddOrReplaceReadGroups` You'll need a directory of .bam input files
-2. `ExtractFingerprints` You'll need two files
+2. `samtools index` to index the new bams with readgroups
+3. `ExtractFingerprints` You'll need two files
 - Reference sequence used to assemble your genomes (i.e. `Homo_sapiens.GRCh38.dna.primary_assembly.fa`) 
 - [Haplotype map](https://gatk.broadinstitute.org/hc/en-us/articles/360035531672-Haplotype-map-format). Can be downloaded from [github](https://github.com/naumanjaved/fingerprint_maps). **Note:** The header to this file must match the header of your bam files (copy the header of your file and replace the header to the haplotype map file if need be). 
 
