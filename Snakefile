@@ -22,7 +22,9 @@ ref_seq = 'path/to/Homo_sapiens.GRCh38.dna.primary_assembly.fa'
 # generate strings used later in the script
 infile = bam_dir + "{smp}/{smp}" + bam_suffix
 outfile_bams = bam_dir + "{smp}/{smp}_RG.bam"
+indexed_bams = bam_dir + "{smp}/{smp}_RG.bam.bai"
 outfile_vcfs = vcf_outpath + "{smp}.vcf"
+
 
 # get list of sample names
 samps=os.listdir(bam_dir)
@@ -45,9 +47,21 @@ rule run_AddOrReplaceReadGroups:
     "s={wildcards.smp};"
     "gatk AddOrReplaceReadGroups INPUT=$infile OUTPUT=$outfile RGID=$s RGLB=RNAseq RGPL=illumina RGPU=$s RGSM=$s;" 
 
+# index rg bams 
+rule run_samtoolsIndex:
+  input:
+    outfile_bams=outfile_bams,
+    bam_dir=bam_dir
+  output:
+    indexed_bams=indexed_bams
+  shell:
+    "infile={input.outfile_bams};" #rg bams
+    "samtools index $infile;"
+
 # run ExtractFingerprint on each bam
 rule run_ExtractFingerprint:
   input: 
+    indexed_bams=indexed_bams,
     outfile_bams=outfile_bams,
     vcf_outpath=vcf_outpath
   output: 
