@@ -17,6 +17,9 @@ haplotype_map = 'path/to/hg38_nochr.map'
 # reference sequence file location 
 ref_seq = 'path/to/Homo_sapiens.GRCh38.dna.primary_assembly.fa'
 
+# crosscheckFingerprint metric output file - should be in an existing directory (mkdir crosscheck_metrics)
+metric_outpath = '/lustre/scratch123/hgi/projects/pops2/rna-seq/qc/crosscheck_fingerprints/crosscheck_metrics/'
+
 # ---------------------------------------------------------------------------
 
 # generate strings used later in the script
@@ -24,6 +27,9 @@ infile = bam_dir + "{smp}/{smp}" + bam_suffix
 outfile_bams = bam_dir + "{smp}/{smp}_RG.bam"
 indexed_bams = bam_dir + "{smp}/{smp}_RG.bam.bai"
 outfile_vcfs = vcf_outpath + "{smp}.vcf"
+vcf_path = vcf_outpath + "*.vcf"
+vcf_list_path = vcf_outpath + "vcf_list.txt"
+metric_outfile = metric_outpath + "all_sample_crosscheck_metrics.txt"
 
 
 # get list of sample names
@@ -32,7 +38,7 @@ samps=os.listdir(bam_dir)
 # specify outputs
 rule all: 
   input: 
-    expand(outfile_vcfs, smp=samps)
+    metric_outfile
 
 # run AddOrReplaceReadGroups on each bam 
 rule run_AddOrReplaceReadGroups:
@@ -70,3 +76,14 @@ rule run_ExtractFingerprint:
     "infile={input.outfile_bams};" #rg bams
     "outfile={input.vcf_outpath}{wildcards.smp}.vcf;" #fingerprint vcf files 
     "gatk ExtractFingerprint HAPLOTYPE_MAP={haplotype_map} INPUT=$infile OUTPUT=$outfile REFERENCE_SEQUENCE={ref_seq};"
+
+# run CrosscheckFingerprints on all vcf files
+rule run_CrosscheckFingerprints:
+  input:
+    expand(outfile_vcfs, smp=samps)
+  output:
+    metric_outfile
+  shell:
+    "path={vcf_path};"
+    "ls $path > {vcf_list_path};"
+    "gatk CrosscheckFingerprints INPUT={vcf_list_path} HAPLOTYPE_MAP={haplotype_map} OUTPUT={metric_outfile} EXIT_CODE_WHEN_MISMATCH=0;"
