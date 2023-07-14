@@ -1,15 +1,17 @@
 # crosscheck_fingerprints_snakemake 
-Pipeline for scaling crosscheck fingerprints for datasets with multiple samples per patient. 
+Pipeline for scaling crosscheck fingerprints for datasets with multiple rna-seq samples per patient. 
 
 **This is a work in progress.** 
 
 [Crosscheck fingerprints](https://gatk.broadinstitute.org/hc/en-us/articles/360037594711-CrosscheckFingerprints-Picard-) indicates whether two RNA-seq samples come from the same individual.
-
-This part of the pipeline is run with snakemake. Help getting started with snakemake [here](https://github.com/Snitkin-Lab-Umich/Snakemake_setup).
+This snakemake pipeline includes the steps necessary to run CrosscheckFingerprints in parallel, as demonstrated in this dag:
+<img src="snakemake_dag.png"  width = "800" />
 
 Why snakemake? 
 - Parallelization of independent jobs (i.e. adding read groups and extracting fingerprints) 
 - Snakemake is aware of which jobs have been run (read: if job output exists in the correct location) and will only run jobs that haven't been run before (read: don't have existing output in the correct location). For this project, we don't have all of our rna samples sequenced yet. In this case, we will be able to add bam files as samples are sequenced and rerun the snakemake pipeline. Snakemake will only do the jobs in the Snakefile (add read groups and extract fingerprints) for the new files without modifying our code. Same will be true for comparisons later... 
+
+Help getting started with snakemake [here](https://github.com/Snitkin-Lab-Umich/Snakemake_setup).
 
 ### To run this pipeline you will need to: 
 ### 1. Activate conda environment
@@ -19,7 +21,7 @@ conda env create -f gatk4_sn # do this only once, the first time
 conda activate gatk4_sn # do this every time
 ```
 ### 2. Edit Snakefile
-In the Snakefile there are three steps 
+In the Snakefile there are four steps 
 1. `AddOrReplaceReadGroups` You'll need a directory of .bam input files
 2. `samtools index` to index the new bams with readgroups
 3. `ExtractFingerprints` You'll need two files
