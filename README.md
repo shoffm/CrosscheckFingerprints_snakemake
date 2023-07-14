@@ -4,7 +4,7 @@ Pipeline for scaling crosscheck fingerprints for datasets with multiple rna-seq 
 **This is a work in progress.** 
 
 [Crosscheck fingerprints](https://gatk.broadinstitute.org/hc/en-us/articles/360037594711-CrosscheckFingerprints-Picard-) indicates whether two RNA-seq samples come from the same individual.
-This snakemake pipeline includes the steps necessary to run CrosscheckFingerprints in parallel, as demonstrated in this dag:
+This snakemake pipeline includes the steps necessary to run CrosscheckFingerprints in parallel, as demonstrated in this sample dag:
 <img src="snakemake_dag.png"  width = "800" />
 
 Why snakemake? 
