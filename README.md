@@ -1,4 +1,4 @@
-# crosscheck_fingerprints_pipeline
+# crosscheck_fingerprints_snakemake 
 Pipeline for scaling crosscheck fingerprints for datasets with multiple samples per patient. 
 
 **This is a work in progress.** 
