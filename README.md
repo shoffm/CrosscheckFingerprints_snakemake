@@ -27,8 +27,18 @@ In the Snakefile there are three steps
   - [Haplotype map](https://gatk.broadinstitute.org/hc/en-us/articles/360035531672-Haplotype-map-format). Can be downloaded from [github](https://github.com/naumanjaved/fingerprint_maps). **Note:** The header to this file must match the header of your bam files (copy the header of your file and replace the header to the haplotype map file if need be).
 4. `CrosscheckFingerprints` to crosscheck all of the fingerprints we've generated. This compares each fingerprint to all others. Originally we wanted to compare only samples that came from the same individual, but the heavy lifting is generating the fingerprints and crosschecking them isn't too bad, so we will leave it at this. If you want to only check samples that come from the same individual, see this [example script](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/generate_sample_pairs.R) for how to generate sample pairs. 
 
-**Edit** the [Snakefile](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/Snakefile) to point to the directory with your bam files, reference sequence, haplotype map and desired output directories 
+**Edit** the [Snakefile](https://github.com/shoffm/crosscheck_fingerprints_pipeline/blob/main/Snakefile) to point to the directory with your bam files, reference sequence, haplotype map and desired output directories. 
+
+Do a dry run to determine if snakemake can make sense of your input and output paths in the workflow.
+```
+snakemake -n
+```
 
 ### 3. Submit snakemake job 
-Run the script to submit snakemake as a job ## TO DO: add this 
+Submission bash script can be found here [submit_snakemake.sh](https://github.com/shoffm/crosscheck_fingerprints_snakemake/blob/main/submit_snakemake.sh).
+
+Remember to have activated your conda environment from step 1. 
+```
+bsub < submit_snakemake.sh
+```
 
