@@ -1,4 +1,4 @@
-# Crosscheck Fingerprints Snakemake Pipeline
+# CrosscheckFingerprints Snakemake Pipeline
 Pipeline for scaling crosscheck fingerprints for datasets with multiple rna-seq samples per patient. 
 
 **This is a work in progress.** 
