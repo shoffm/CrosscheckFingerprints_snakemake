@@ -18,7 +18,7 @@ haplotype_map = 'path/to/hg38_nochr.map'
 ref_seq = 'path/to/Homo_sapiens.GRCh38.dna.primary_assembly.fa'
 
 # crosscheckFingerprint metric output file - should be in an existing directory (mkdir crosscheck_metrics)
-metric_outpath = '/lustre/scratch123/hgi/projects/pops2/rna-seq/qc/crosscheck_fingerprints/crosscheck_metrics/'
+metric_outpath = '/path/to/crosscheck_fingerprints_pipeline/crosscheck_metrics/'
 
 # ---------------------------------------------------------------------------
 
