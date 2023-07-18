@@ -43,4 +43,5 @@ Remember to have activated your conda environment from step 1.
 ```
 bsub < submit_snakemake.sh
 ```
-
+### 4. Compare CrosscheckFingerprints output to expectation
+Use your crosscheck metric file (from Snakefile: `metric_outpath = '/path/to/crosscheck_fingerprints_pipeline/crosscheck_metrics/all_sample_crosscheck_metrics.txt'`) and your own records of which samples come from the same patients to determine if CrosscheckFingerprints detected any sample swaps in your data. Example R code [evaluate_CrosscheckFingerprints_metrics.R](https://github.com/shoffm/CrosscheckFingerprints_snakemake/blob/main/evaluate_CrosscheckFingerprints_metrics.R)
